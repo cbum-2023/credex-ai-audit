@@ -1,26 +1,24 @@
-# Architecture
+Data Flow
 
-```mermaid
-flowchart TD
-  A[Visitor] --> B[Next.js audit form]
-  B --> C[API route /api/audits]
-  C --> D[Deterministic audit engine]
-  D --> E[Supabase audits table]
-  E --> F[Shareable /audit/:id page]
-  F --> G[Anthropic summary route]
-  F --> H[Lead capture form]
-  H --> I[Supabase leads table]
-  H --> J[Resend transactional email]
-```
+Users submit details such as tools used, monthly spend, team size, and use cases through the audit form. The backend validates the input using Zod, processes the data through the audit engine, and stores the generated report in Supabase. A unique report page is then created for each audit.
 
-## Data Flow
+The report page can optionally generate an AI-based summary. If the AI service fails, the application falls back to a deterministic summary to ensure reliability.
 
-The user enters tools, plan, spend, seats, team size, and use case. The API validates the payload with Zod, runs the audit engine, stores a sanitized report in Supabase, and returns the report ID. The report page can then request an Anthropic-generated paragraph; if the API fails, the page keeps the deterministic fallback summary.
+Stack Choice
 
-## Stack Choice
+* Next.js handles frontend pages, API routes, and deployment in a single application.
+* TypeScript + Zod provide type safety and request validation.
+* Tailwind CSS enables fast and responsive UI development.
+* Supabase is used for storing audit reports and lead information.
+* Resend manages transactional emails.
+* Vitest is used for testing core business and financial logic.
 
-Next.js keeps the form, public report pages, Open Graph metadata, and API routes in one deployable Vercel app. TypeScript and Zod make the audit inputs explicit. Tailwind and shadcn-style primitives keep the UI fast to iterate while still accessible. Supabase is enough for audit and lead storage, Resend handles transactional email, and Vitest covers the financial logic.
+Scalability (10k+ Audits/Day)
 
-## 10k Audits Per Day
+To support high traffic and scale efficiently:
 
-Move rate limiting to Redis or Upstash, add database indexes on `created_at` and savings, queue Resend email delivery, cache public audit pages, and move Anthropic summary generation to a background job. I would also version pricing data and audit rules so old reports remain explainable after pricing changes.
+* Add rate limiting using Redis or Upstash
+* Optimize database queries with indexes
+* Cache public audit pages for faster load times
+* Move email sending and AI summary generation to background jobs
+* Version audit rules and pricing logic for consistency across old reports

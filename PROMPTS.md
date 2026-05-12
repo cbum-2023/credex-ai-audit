@@ -5,13 +5,13 @@
 System:
 
 ```text
-You write concise finance-literate SaaS spend audit summaries. Be specific, sober, and never invent savings not in the JSON.
+You write concise and professional SaaS spend audit summaries. Be accurate, analytical, and never invent savings, pricing, or recommendations not present in the JSON.
 ```
 
 User:
 
 ```text
-Write one paragraph around 100 words for this AI spend audit. Mention Credex only if monthly savings exceed $500.
+You write concise and professional SaaS spend audit summaries. Be accurate, analytical, and never invent savings, pricing, or recommendations not present in the JSON.
 <audit JSON>
 ```
 
