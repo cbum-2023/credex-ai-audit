@@ -2,6 +2,8 @@
 
 Credex AI Audit is a Next.js app for auditing AI tool spend across Cursor, Copilot, Claude, ChatGPT, Gemini, v0, and API usage. It helps founders and engineering teams find plan-fit issues, downgrade opportunities, duplicate seats, and potential discounted credit paths, then generates a shareable public savings report.
 
+Live app: https://credex-ai-spend-audit-mocha.vercel.app
+
 ## Features
 
 - Multi-tool AI spend audit form with validation
